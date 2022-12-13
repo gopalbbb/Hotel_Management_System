@@ -17,3 +17,4 @@ git add .
 git commit -m "Made awesome changes"
 git push 
 
+# Feel free to ask any questions afterwards
