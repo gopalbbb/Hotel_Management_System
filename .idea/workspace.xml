@@ -4,7 +4,10 @@
     <list default="true" id="4212d93e-bc1e-4441-be6e-f9d3cd255190" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/HmcInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+=======
+>>>>>>> bc4d9aa0ba3c9d1aa6e019d8065efaf22edd1f5e
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
