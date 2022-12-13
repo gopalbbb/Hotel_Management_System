@@ -7,5 +7,5 @@ Hotel Management System
 - Check out
 2. Get a list of in house guests
 3. Admin Portal
--employee list 
--Report .
+4. Employee List 
+5. Reports and Stats
