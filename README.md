@@ -9,3 +9,5 @@ Hotel Management System
 3. Admin Portal
 4. Employee List 
 5. Reports and Stats
+7. start create interface with necessary method ...
+8.  implement check in method  ..
