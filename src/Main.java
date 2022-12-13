@@ -15,6 +15,7 @@ public class Main {
         System.out.println("1. House\t (In House Guest List)\t(Departures List)");
         System.out.println("2.Reservation\t (CheckIn) ");
         System.out.println("3.Admin Portal\t(Employees)\t(report)");
+        System.out.println("4.");
 
 
         Scanner scan = new Scanner(System.in);
