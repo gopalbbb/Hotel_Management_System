@@ -1,4 +1,4 @@
-public interface HmcInterface {
+public interface  HmcInterface {
 
     public void checkIn();
 
