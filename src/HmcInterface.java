@@ -1,10 +1,10 @@
+import java.sql.SQLException;
+
 public interface  HmcInterface {
 
-    public void checkIn();
+    public CheckIn checkInGuest(CheckIn checkIn) throws ClassNotFoundException, SQLException;
     public void checkOut();
-    public void setNumberOfRooms();
-    public void makeReservation();
-    public void cancelReservation();
-    public void getAllReservationSortedByPrice();
+    public void InHouse();
+    public void AdminPortal();  
    // getAllReservationSortedByDate();
 }
