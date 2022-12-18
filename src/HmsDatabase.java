@@ -1,8 +1,13 @@
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+
+import election.Gender;
+import election.Voter;
 
 public class HmsDatabase implements HmcInterface{
 
@@ -48,17 +53,23 @@ public class HmsDatabase implements HmcInterface{
 		
 	}
 
+
 	
 	@Override
-	public void InHouse() {
+	public void InHouse() throws Exception {
 		
-		 Class.forName("com.mysql.cj.jdbc.Driver");
+		 try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 Connection con = DriverManager.getConnection(URL, USERNAME,PASSWORD);
-		 String insertQuery = "SELECT*FROM checkInList";
-		 System.out.println(insertQuery);
+		 String Query = "SELECT*FROM checkInList";
+		 System.out.println(Query);
 		 
 		 Statement statement = con.createStatement();
-		 ResultSet results = statement.executeQuery(query);
+		 ResultSet results = statement.executeQuery(Query);
 		
 	     while (results.next()) {
 
@@ -73,6 +84,64 @@ public class HmsDatabase implements HmcInterface{
 	@Override
 	public void AdminPortal() {
 		 
+		
+	}
+
+	@Override
+	public void ViewAllEmployees () throws IOException {
+		
+		        Connection con = null;
+		        Statement statement = null;
+//		        Voter voter=null;
+		        try {
+		            Class.forName("com.mysql.cj.jdbc.Driver");
+		            con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+		            // Need to create emplist in database
+		           
+		            String query = "SELECT * from emplist";
+
+		            //			System.out.println(query);
+
+		            statement = con.createStatement();
+
+		            ResultSet results = statement.executeQuery(query);
+
+		            while (results.next()) {
+		               
+		            	System.out.println(results.getInt(1));
+//		                voter.setFirstName(results.getString(2));
+//		                voter.setLastName(results.getString(3));
+//		                voter.setGender(Gender.getByValue(results.getString(4)));
+//		                LocalDate dob = LocalDate.parse(results.getString(5));
+//		                voter.setDateOfBirth(dob);
+//		                voter.setUsername(results.getString(6));
+//		                voter.setPassword(results.getString(7));
+//		                System.out.println(voter);
+//		                return voter;
+
+		            }
+
+		        } catch (ClassNotFoundException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		        } catch (SQLException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		        } finally {
+		            try {
+		                statement.close();
+		                con.close();
+		            } catch (SQLException e) {
+		                // TODO Auto-generated catch block
+		                e.printStackTrace();
+		            }
+
+		        }
+
+		        return voter;
+		    }
+		// TODO Auto-generated method stub
 		
 	}
 
