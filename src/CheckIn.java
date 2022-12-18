@@ -1,6 +1,7 @@
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class CheckIn {
 	
@@ -164,5 +165,16 @@ public class CheckIn {
 	
 	
 }
-	
+private LocalDateTime checkInDate;
+
+void getTimeCheckInDetails(Scanner sc) {
+	System.out.println("Please enter number 1 for CheckIn");
+	String operation = sc.next();
+	if ("1".equals(operation)) {
+		LocalDateTime date1 = LocalDateTime.now();
+		this.checkInDate = date1;
+		System.out.println("ClockIn" + ":" + date1);
+	} else {
+		System.out.println("Mismatch!!check your number");
+		System.exit(2);
 	

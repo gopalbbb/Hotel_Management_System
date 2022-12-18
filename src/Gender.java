@@ -2,8 +2,8 @@
 
 /**
  * Enum for gender
- * 
- * @author ubuntu
+ 
+ * @author 
  */
 public enum Gender {
 	
