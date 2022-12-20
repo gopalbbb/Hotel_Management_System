@@ -26,7 +26,6 @@ public class RoomList {
                 rooms.add(userinp);
                 System.out.println("Room Assigned");
                 System.out.println(rooms);
-                return userinp;
 
             }
             }

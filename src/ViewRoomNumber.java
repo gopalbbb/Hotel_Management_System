@@ -41,12 +41,9 @@ public class ViewRoomNumber {
             while (results.next()) {
                 admin = new ViewRoomNumber();
                 System.out.println(results.getInt(1));
-                /*System.out.println(admin.getContact());
-                System.out.println(admin.getName());
-                System.out.println("hello");*/
+
 
                 roomlist.add(admin);
-//                System.out.println(admin);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -63,6 +60,34 @@ public class ViewRoomNumber {
         }
         return roomlist;
     }
+
+   /* public boolean doesNumberExist() throws SQLException {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        List<Integer> nums = new ArrayList<>();
+        String sql = "SELECT room-no from guestlist";
+
+        int num = 0;
+        try (Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);) {
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                num = rs.getInt(1);
+                // ADD NUMBER TO THE LIST
+                nums.add(num);
+            }
+        } finally {
+            ps.close();
+            rs.close();
+        }
+        // RETURN IF LIST CONTAINS NUMBER OR NOT
+        return nums.contains(num);
+    }
+
+*/
 
     public CheckIn roomSoldRecord( LocalDate check_in) throws ClassNotFoundException, SQLException {
 
@@ -83,6 +108,12 @@ public class ViewRoomNumber {
         con.close();
         return null;
     }
+
+   /* public static void main(String[] args) throws SQLException {
+        ViewRoomNumber room = new ViewRoomNumber();
+       room.doesNumberExist();
+
+    }*/
 
 }
 

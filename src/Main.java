@@ -2,10 +2,7 @@
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -25,9 +22,7 @@ public class Main {
         Adminportal adminportal = new Adminportal();
         ViewRoomNumber viewRoomNumber = new ViewRoomNumber();
         Hmsdatabase hmsdatabase=new Hmsdatabase();
-
-
-        ;
+        RoomList roomList=new RoomList();
 
         // print main page
 while (true){
@@ -36,12 +31,12 @@ while (true){
         System.out.println("1.Front Desk ");
         System.out.println("2.Admin Portal");
 
+       int choice=0;
 
-        int choice = 0;
-        // choose option
-        // implement option ( create method in another class
         choice = scan.nextInt();
-        // when user choose number inside some funcation
+        
+        // GuestCheckIn Method
+        
         if (choice == 1) {
             System.out.println("Front Desk  ### Start Your Shift ###  ");
             System.out.println("Please Input your username and password");
@@ -57,7 +52,7 @@ while (true){
             }
 
             System.out.println("Choose your operation ");
-            System.out.println("1. Guest Check In ");
+            System.out.println("1.Guest Check In ");
             System.out.println("2.Guest Check out ");
             System.out.println("3.End Shift");
             int option = 1;
@@ -97,7 +92,7 @@ while (true){
                     } else if (roomchoice == 2) {
                         r = RoomType.DELUXE;
                     } else if (roomchoice == 3) {
-                        r = RoomType.SUPERDELXUE;
+                        r = RoomType.SUPERDELUXE;
                     } else {
                         System.out.println("Invalid option.");
                         continue;
@@ -109,36 +104,46 @@ while (true){
                 while (true) {
                     System.out.println("Room No.");
                     int finalroomnumber = scan.nextInt();
-                    if (finalroomnumber >= 1 && finalroomnumber <= 50) {
+                    if (finalroomnumber >= 1 && finalroomnumber <= 30) {
 
                         roomNum = finalroomnumber;
                         break;
-                    } else {
-                        continue;
                     }
                 }
 
                 System.out.println("Id Number");
                 int idNum = scan.nextInt();
+
                 System.out.println("Id type (DL,GC,SI,PP");
                 String idType = scan.next();
-                System.out.println("Room charge :- Standard $300,Deluxe $500,SuperDeluxe $700");
-                int charge = scan.nextInt();
-                System.out.println("Collect Payment as a same amount with same roomType  Standard $300,Deluxe $500,SuperDeluxe $700");
-                int collectPayment = scan.nextInt();
+                // fix room charger
+
+                System.out.println("Room charge :- Press ~~~ 1.Standard $500,2. Deluxe $700,3.SuperDeluxe $900");
+                int value=0;
+                value=scan.nextInt();
+                int charge = value;
+                if(value==1){charge =500;}
+                else if(value==2){charge=700;}
+                else if(value==3){charge =900;}
+
+                System.out.println("Collect Payment as a same amount with same roomType ");
+                //int collectPayment=value;
+               int values=0;
+                values=scan.nextInt();
+                int collectPayment = values;
+                if(values==1){collectPayment =500;}
+                else if(values==2){collectPayment=700;}
+                else if(values==3){collectPayment =900;}
+
                 System.out.println("Ready for Check In ");
                 LocalDate checkInDate = LocalDate.now();
-            /*System.out.println("press 1 for check in ");
-            CheckIn check=new CheckIn();1
-            check.getClockIn();
-            LocalDateTime checkInDate=check.getClockIn();*/
 
                 CheckIn checkIn1 = new CheckIn(firstName, lastName, g, address, r, roomNum, idType, idNum, charge, collectPayment, checkInDate);
                 hmsService.checkInGuest(checkIn1);
-                continue;
+                continue;}
 
 
-            } else if (option == 2) {
+             else if (option == 2) {
                 //CHECK Out
                 System.out.println("Enter First Name of Guest ::");
                 String first_name = scan.next();
@@ -149,7 +154,6 @@ while (true){
                     System.out.println("Ready for CheckOut");
                 } else {
                     System.out.println("Please conform your Room number ");
-
                 }
                 System.out.println("Enter room number");
                 int room_no1 = scan.nextInt();
@@ -163,7 +167,6 @@ while (true){
             System.exit(1);
             continue;
         }
-
 
         if (choice == 2) {
             System.out.println("This is Admin Portal Only Authorize Person Can Access");
@@ -221,3 +224,4 @@ while (true){
             }
         }
     }}}
+

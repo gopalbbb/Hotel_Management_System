@@ -2,12 +2,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 
-/**
- *
- *
- *
- */
-public class Hmsdatabase implements HmcInterface {
+
+class Hmsdatabase implements HmcInterface {
 
 
     private final static String USERNAME = "root";
@@ -209,7 +205,7 @@ public class Hmsdatabase implements HmcInterface {
 
         String insertQuery = "UPDATE guestlist SET check_out ='" + checkout.getCheckOutDate() + "'WHERE room_no='" + checkout.getRoomNum() + "'";
 
-        System.out.println(insertQuery);
+        //System.out.println(insertQuery);
 
         Statement statement = con.createStatement();
         int resultValue = statement.executeUpdate(insertQuery);
