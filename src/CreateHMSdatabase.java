@@ -3,6 +3,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * syntax to create table in database
+ * it is not used  in this project ...
+ *
+ */
 public class CreateHMSdatabase {
     private final static String USERNAME = "root";
 

@@ -1,7 +1,24 @@
 # Project Name
 Hotel Management System
 
-# Todo
+# Feature 
+1. Front desk 
+    -login
+- guest check in 
+- guest check out 
+- end shift  
+
+2. Admin
+-Total Transaction of The Day
+-Front Desk Activities and In House Guest List
+-View All Guest List
+-View Room Sold Record (Search By date)
+-Hotel Employees
+-log out
+
+
+# Todo 2022-12-11 
+ 
 1. Implement Check in and check out system
 - Check in && Payment
 - Check out

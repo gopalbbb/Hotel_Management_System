@@ -2,11 +2,15 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
- *
- *
- *
+ * created object for employee
+ * generate getter setter and constructor
+ * connect database with mysql
+ * access emp table
+ * created method for view all employee use in ADMIN
+ * pass method to main  class
  */
 public class Adminportal {
     private int emp_id;
@@ -17,8 +21,8 @@ public class Adminportal {
     private String username;
     private String password;
 
-    public Adminportal(int emp_id, String name, String address, String post, String contact, String username, String password) {
-        this.emp_id = emp_id;
+    public Adminportal( String name, String address, String post, String contact, String username, String password) {
+
         this.name = name;
         this.address = address;
         this.post = post;
@@ -31,12 +35,28 @@ public class Adminportal {
 
     }
 
+    public Adminportal(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
 
-  /*public Adminportal() {
+    /*public Adminportal() {
 
     }*/
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Adminportal that = (Adminportal) o;
+        return Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getPassword(), that.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername(), getPassword());
+    }
 
     @Override
     public String toString() {
@@ -113,7 +133,7 @@ public class Adminportal {
     private final static String PASSWORD = "RootPassword";
 
     private final static String URL = "jdbc:mysql://localhost:3306/hms";
-
+// method for viewAll employee
     public List<Adminportal> viewAllemp() throws IOException {
         Connection con = null;
         Statement statement = null;
@@ -163,5 +183,35 @@ public class Adminportal {
         }
         return emplist;
     }
+    public Adminportal addEmployee(Adminportal adminportal) throws ClassNotFoundException, SQLException {
 
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+        String insertQuery = "INSERT INTO employee (name,address,post,contact,username,password)" + "value ( '" +adminportal.getName()+ "', '" + adminportal.getAddress()+ "','" + adminportal.getPost() + "','" + adminportal.getContact() + "','" + adminportal.getUsername() + "','" + adminportal.getPassword() + "')";
+
+
+        System.out.println(insertQuery);
+
+        Statement statement = con.createStatement();
+        int resultValue = statement.executeUpdate(insertQuery);
+
+
+        if (resultValue == 2) {
+            System.out.println("Failed to insert/update data. Check your data and try again.");
+        }
+
+        statement.close();
+        con.close();
+
+        return adminportal;
+
+    }
+
+
+
+    public void addEmployee(String name, String address, String post, String contact, String username, String password) {
+    }
 }

@@ -7,8 +7,10 @@ import java.util.Scanner;
 
 public class Main {
 
-    /**
-     *
+    /** create object from service class , admin portal  and other class for access method
+     *  for hotel room just make array for 30  room
+     * for room charge and payment using (if else and choose) condition and fix room rent  in main class  reason time shortage .
+     *  for log in front desk and admin just create  username and password in main class reason time shortage.
      *
      * @param args
      * @throws SQLException
@@ -22,35 +24,41 @@ public class Main {
         Adminportal adminportal = new Adminportal();
         ViewRoomNumber viewRoomNumber = new ViewRoomNumber();
         Hmsdatabase hmsdatabase=new Hmsdatabase();
-        RoomList roomList=new RoomList();
+
+
 
         // print main page
-while (true){
-        System.out.println("Welcome To Extended Stay America");
+        try{
+            while (true){
+     System.out.println("Welcome To Extended Stay America");
         System.out.println("Please choose your option");
         System.out.println("1.Front Desk ");
         System.out.println("2.Admin Portal");
 
-       int choice=0;
+    int choice=0;
 
         choice = scan.nextInt();
         
         // GuestCheckIn Method
         
-        if (choice == 1) {
+        if (choice == 1){
+
+
             System.out.println("Front Desk  ### Start Your Shift ###  ");
             System.out.println("Please Input your username and password");
             System.out.println("username");
             String username = scan.next();
             System.out.println("password");
             String password = scan.next();
-            if ((username.equals("frontdesk")) && (password.equals("hotel"))) {
-                System.out.println(" login successfully ");
+            adminportal = hmsService.logIn(username,password);
+
+            if (adminportal != null) {
+                System.out.println("Welcome::"+username);
             } else {
-                System.out.println("user incorrect !!! ");
+                System.out.println("User Incorrect !!!Please TRY Again ");
                 continue;
             }
-
+            if(adminportal.getPost().equals("frontdesk")){
             System.out.println("Choose your operation ");
             System.out.println("1.Guest Check In ");
             System.out.println("2.Guest Check out ");
@@ -100,16 +108,21 @@ while (true){
                     break;
                 }
 
-                int roomNum = 0;
+                int roomNumber = 0;
                 while (true) {
-                    System.out.println("Room No.");
+                    System.out.println("Please Choose Room No. (1-30)");
                     int finalroomnumber = scan.nextInt();
                     if (finalroomnumber >= 1 && finalroomnumber <= 30) {
+                        roomNumber = finalroomnumber;
+                        //  checkIn= hmsService.checkRoom(roomNumber);
 
-                        roomNum = finalroomnumber;
-                        break;
-                    }
-                }
+                       /* if(checkIn.equals(roomNumber)){
+                            System.out.println("Room Occupied ");
+                        }else{
+                            System.out.println("Room Assigned");*/
+
+                            break;}}
+
 
                 System.out.println("Id Number");
                 int idNum = scan.nextInt();
@@ -125,22 +138,27 @@ while (true){
                 if(value==1){charge =500;}
                 else if(value==2){charge=700;}
                 else if(value==3){charge =900;}
+                System.out.println("Duration");
+                int stay_duration=scan.nextInt();
 
-                System.out.println("Collect Payment as a same amount with same roomType ");
+                System.out.println("Collect Payment calculate with duration time ");
                 //int collectPayment=value;
-               int values=0;
-                values=scan.nextInt();
-                int collectPayment = values;
-                if(values==1){collectPayment =500;}
-                else if(values==2){collectPayment=700;}
-                else if(values==3){collectPayment =900;}
 
-                System.out.println("Ready for Check In ");
-                LocalDate checkInDate = LocalDate.now();
+                int collectPayment =charge*stay_duration;
+                System.out.println("Total Pay::"+collectPayment);
+                System.out.println("press 1 for conform CheckIn");
+                System.out.println("press 2 for cancel CheckIn");
+                int press=0;
+                press=scan.nextInt();
+                if(press==1) {
+                    System.out.println(" Check In Successfully!!!");
+                    LocalDate checkInDate = LocalDate.now();
+                    if(press==2){
+                        System.out.println("Cancel CheckIn");continue;}
 
-                CheckIn checkIn1 = new CheckIn(firstName, lastName, g, address, r, roomNum, idType, idNum, charge, collectPayment, checkInDate);
+                CheckIn checkIn1 = new CheckIn(firstName, lastName, g, address, r, roomNumber, idType, idNum, charge,stay_duration,collectPayment, checkInDate);
                 hmsService.checkInGuest(checkIn1);
-                continue;}
+                continue;}}
 
 
              else if (option == 2) {
@@ -166,28 +184,32 @@ while (true){
             }
             System.exit(1);
             continue;
-        }
+        }}
 
         if (choice == 2) {
             System.out.println("This is Admin Portal Only Authorize Person Can Access");
             System.out.println("Please Input your username and password");
             System.out.println("Enter user name");
-            String username = scan.next();
+            String username2 = scan.next();
             System.out.println("Enter password");
-            String password = scan.next();
-            if ((username.equals("manager")) && (password.equals("hotel"))) {
-                System.out.println(" login successfully ");
-            } else {
-                System.out.println("you are not authorize person ");
-                continue;
+            String password2 = scan.next();
 
+            adminportal = hmsService.logIn(username2,password2);
+
+            if (adminportal != null) {
+                System.out.println(" login successfully !! Welcome::"+username2);
+            } else {
+                System.out.println("User Incorrect !!!Please TRY Again ");
+                continue;
             }
+            if(adminportal.getPost().equals("manager")){
             System.out.println("Admin Can Access Those Function ");
             System.out.println("1.Total Transaction of The Day");
             System.out.println("2.Front Desk Activities and In House Guest List ");
             System.out.println("3.View All Guest List ");
             System.out.println("4.View Room Sold Record (Search By date)");
             System.out.println("5. Hotel Employees");
+            System.out.println("6.Hire new Employee");
 
             int choose = 0;
             choose = scan.nextInt();
@@ -222,6 +244,32 @@ while (true){
                 // View All employee mean who are working in hotel manager to housekeeper  ....
                 adminportal.viewAllemp();
             }
+            else if(choose==6){{
+                System.out.println("Enter details of new Employee");
+                System.out.println("name");
+                String name=scan.next();
+                System.out.println("address");
+                String address=scan.next();
+                System.out.println("Position");
+                String post=scan.next();
+                System.out.println("Contact Number");
+                String contact=scan.next();
+                System.out.println("Username");
+                String username1=scan.next();
+                System.out.println("Password");
+                String password1=scan.next();
+                Adminportal adminportal1=new Adminportal(name,address,post,contact,username1,password1);
+                adminportal.addEmployee(adminportal1);
+            }}
+
+    }}}}
+ catch (Exception e){
+        System.out.println(e);}
+            finally{
+                System.out.println("Only Integer number can accepts");return;
         }
-    }}}
+            }}
+
+
+
 

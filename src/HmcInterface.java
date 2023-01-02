@@ -3,7 +3,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- *
+ * created interface for common method .
  *
  *
  *

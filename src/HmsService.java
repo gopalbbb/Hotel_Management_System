@@ -1,9 +1,10 @@
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
- *
+ * collected method from Hms database and pass for main Class
  *
  *
  *
@@ -38,4 +39,18 @@ public CheckIn checkOut(int room_no, LocalDate check_out) throws IOException, SQ
 
 
 }
+Adminportal logIn (String username, String password) throws IOException {
+   Loginn log =new Loginn();
+   Adminportal admin=null;
+ admin= log.searchByUserNameandPassword(username,password);
+ return admin;
+
 }
+public CheckIn checkRoom(Integer roomNumber) throws SQLException, ClassNotFoundException {
+    ViewRoomNumber viewRoomNumber=new ViewRoomNumber();
+    CheckIn roomexit=null;
+    roomexit=viewRoomNumber.roomList(roomNumber);
+    return roomexit;
+
+
+}}

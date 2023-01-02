@@ -1,8 +1,7 @@
 
 /**
  * Enum for gender
- 
- * @author 
+ * pass to main class for store record in gender column 
  */
 public enum Gender {
 	

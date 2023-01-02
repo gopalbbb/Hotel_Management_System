@@ -2,6 +2,17 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 
+/** Implemented Interface
+ * Connected to Database using jdbc (help of mysql connector jar file)
+ * created  method (Check in guest -> for front desk, user option 1 check in guest)
+ * created method (check out ->for front desk user, option 2 check out guest)
+ * created method (searchByRoomNumberandGuestName -> for front desk  user  use in checkout )
+ * created method (dayTransication -> for admin 1.Total Transaction of The Day)
+ * created method ( in house -> for admin ,option  2.Front Desk Activities and In House Guest List
+ * created method (viewAllGuestRecord -> for admin, option viewAllGuestRecord )
+ * every method connect with database  and HmsService class
+
+ */
 
 class Hmsdatabase implements HmcInterface {
 
@@ -16,7 +27,7 @@ class Hmsdatabase implements HmcInterface {
     Statement statement = null;
     CheckIn checkIn = null;
 
-
+//CHECK IN
     @Override
     public CheckIn checkInGuest(CheckIn checkIn) throws ClassNotFoundException, SQLException {
 
@@ -25,10 +36,10 @@ class Hmsdatabase implements HmcInterface {
 
         Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-        String insertQuery = "INSERT INTO guestlist (first_name, last_name,gender,address,room_type,room_no,id_no,id_type,charge,payment,check_in)" + "value ( '" + checkIn.getFirstName() + "', '" + checkIn.getLastName() + "','" + checkIn.getGender() + "'," + "'" + checkIn.getAddress() + "','" + checkIn.getRoomType() + "','" + checkIn.getRoomNum() + "','" + checkIn.getIdNum() + "','" + checkIn.getIdType() + "','" + checkIn.getCharge() + "','" + checkIn.getCollectPayment() + "','" + checkIn.getCheckInDate() + "')";
+        String insertQuery = "INSERT INTO guestlist (first_name, last_name,gender,address,room_type,room_no,id_no,id_type,charge,stay_duration,payment,check_in)" + "value ( '" + checkIn.getFirstName() + "', '" + checkIn.getLastName() + "','" + checkIn.getGender() + "'," + "'" + checkIn.getAddress() + "','" + checkIn.getRoomType() + "','" + checkIn.getRoomNum() + "','" + checkIn.getIdNum() + "','" + checkIn.getIdType() + "','" + checkIn.getCharge() + "','" + checkIn.getStayDuration() + "','"+ checkIn.getCollectPayment() + "','" + checkIn.getCheckInDate() + "')";
 
 
-        System.out.println(insertQuery);
+        //System.out.println(insertQuery);
 
         Statement statement = con.createStatement();
         int resultValue = statement.executeUpdate(insertQuery);
@@ -44,8 +55,51 @@ class Hmsdatabase implements HmcInterface {
         return checkIn;
 
     }
+  //CHECK OUT METHOD
+    public CheckIn CHECKOUT(int room_no, LocalDate check_out) throws ClassNotFoundException, SQLException {
+
+        CheckIn checkout = new CheckIn(room_no, check_out);
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+        String insertQuery = "UPDATE guestlist SET check_out ='" + checkout.getCheckOutDate() + "'WHERE room_no='" + checkout.getRoomNum() + "'";
+
+        //System.out.println(insertQuery);
+
+        Statement statement = con.createStatement();
+        int resultValue = statement.executeUpdate(insertQuery);
 
 
+        if (resultValue == 2) {
+            System.out.println("You already Checked Out");
+        }
+
+        statement.close();
+        con.close();
+        return null;
+    }
+//  Day transication for admin user
+    public CheckIn dayTransication( LocalDate check_in) throws ClassNotFoundException, SQLException {
+
+        CheckIn transication= new CheckIn(check_in);
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+        Statement stmt1 = con.createStatement();
+
+        ResultSet rs1 = stmt1.executeQuery("SELECT sum(payment) FROM guestlist where check_in ='" + transication.getCheckInDate()+"'");
+
+        while (rs1.next()) {
+            System.out.println("The Total Collected Amount  = $ " + rs1.getInt(1));
+        }
+
+        stmt1.close();
+        con.close();
+        return null;
+    }
+//created method ( in house -> for admin ,option  2.Front Desk Activities and In House Guest List
     // @Override
     public CheckIn inHouse() throws SQLException {
 
@@ -90,7 +144,7 @@ class Hmsdatabase implements HmcInterface {
         return null;
     }
 
-
+    //created method (check out ->for front desk user, option 2 check out guest)
     public CheckIn searchByRoomNumberandGuestName(String first_name, int room_no) throws IOException {
         Connection con = null;
         Statement statement = null;
@@ -100,7 +154,7 @@ class Hmsdatabase implements HmcInterface {
             con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             String query = "select * from hms.guestlist where first_name ='" + first_name + "' and room_no='" + room_no + "'";
-            System.out.println(query);
+           // System.out.println(query);
 
 
             statement = con.createStatement();
@@ -118,12 +172,13 @@ class Hmsdatabase implements HmcInterface {
                 checkIn.setRoomNum(results.getInt(7));
                 checkIn.setIdNum(results.getInt(8));
                 checkIn.setIdType(results.getString(9));
-                checkIn.setCharge(results.getInt(10));
-                checkIn.setCollectPayment(results.getInt(11));
-                LocalDate check_in = LocalDate.parse(results.getString(12));
+                checkIn.setStayDuration(results.getInt(10));
+                checkIn.setCharge(results.getInt(11));
+                checkIn.setCollectPayment(results.getInt(12));
+                LocalDate check_in = LocalDate.parse(results.getString(13));
                 checkIn.setCheckInDate(check_in);
                 System.out.println(checkIn);
-                return checkIn;
+
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -143,7 +198,7 @@ class Hmsdatabase implements HmcInterface {
 
 
     }
-
+    //created method (viewAllGuestRecord -> for admin, option viewAllGuestRecord )
     public CheckIn viewAllGuestRecord() throws IOException {
         Connection con = null;
         Statement statement = null;
@@ -196,49 +251,9 @@ class Hmsdatabase implements HmcInterface {
 
     }
 
-    public CheckIn CHECKOUT(int room_no, LocalDate check_out) throws ClassNotFoundException, SQLException {
-
-        CheckIn checkout = new CheckIn(room_no, check_out);
-        Class.forName("com.mysql.cj.jdbc.Driver");
-
-        Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-        String insertQuery = "UPDATE guestlist SET check_out ='" + checkout.getCheckOutDate() + "'WHERE room_no='" + checkout.getRoomNum() + "'";
-
-        //System.out.println(insertQuery);
-
-        Statement statement = con.createStatement();
-        int resultValue = statement.executeUpdate(insertQuery);
 
 
-        if (resultValue == 2) {
-            System.out.println("You already Checked Out");
-        }
 
-        statement.close();
-        con.close();
-        return null;
-    }
-
-   public CheckIn dayTransication( LocalDate check_in) throws ClassNotFoundException, SQLException {
-
-       CheckIn transication= new CheckIn(check_in);
-       Class.forName("com.mysql.cj.jdbc.Driver");
-
-       Connection con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-       Statement stmt1 = con.createStatement();
-
-       ResultSet rs1 = stmt1.executeQuery("SELECT sum(payment) FROM guestlist where check_out ='" + transication.getCheckInDate()+"'");
-
-       while (rs1.next()) {
-           System.out.println("The Total Collected Amount  :: " + rs1.getInt(1));
-       }
-
-       stmt1.close();
-       con.close();
-       return null;
-    }
 
 
 

@@ -1,5 +1,12 @@
+/**
+ * Create enum class for room type
+ * pass enum to main class
+ *
+ *
+ *
+  */
 
-	public enum RoomType {
+public enum RoomType {
 	    STANDARD("STANDARD"),
 	    DELUXE("DELUXE"),
 		SUPERDELUXE("SUPERDELUXE");

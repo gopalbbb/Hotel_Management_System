@@ -2,8 +2,8 @@
 import java.time.LocalDate;
 import java.util.Scanner;
 
-/**
- *
+/** plane old java object class for check in guest
+ * created getter setter and constructor
  *
  *
  *
@@ -19,6 +19,7 @@ public class CheckIn {
     private String idType;
     private int idNum;
     private int charge;
+    private int stayDuration;
     private int collectPayment;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -29,13 +30,14 @@ public class CheckIn {
         this.checkOutDate = checkOutDate;
     }
 
-    public CheckIn(String firstName, int roomNum) {
-        this.firstName = firstName;
+
+    public CheckIn(int roomNum) {
         this.roomNum = roomNum;
     }
 
-
-    public CheckIn(String firstName, String lastName, Gender gender, String address, RoomType roomType, int roomNum, String idType, int idNum, int charge, int collectPayment, LocalDate checkInDate) {
+    public CheckIn(String firstName, String lastName, Gender gender,
+                   String address, RoomType roomType, int roomNum, String idType,
+                   int idNum, int charge,int stayDuration,int collectPayment, LocalDate checkInDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -45,6 +47,7 @@ public class CheckIn {
         this.idType = idType;
         this.idNum = idNum;
         this.charge = charge;
+        this.stayDuration=stayDuration;
         this.collectPayment = collectPayment;
         this.checkInDate=checkInDate;
     }
@@ -59,6 +62,13 @@ public class CheckIn {
         this.checkInDate = checkInDate;
     }
 
+    public int getStayDuration() {
+        return stayDuration;
+    }
+
+    public void setStayDuration(int stayDuration) {
+        this.stayDuration = stayDuration;
+    }
 
     public int getGuestId() {
         return guestId;
@@ -182,18 +192,5 @@ public class CheckIn {
                 ", checkOutDate=" + checkOutDate +
                 '}';
     }
-    public LocalDate getClockIn() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter number 1 for ClockIn");
-        String operation = sc.nextLine();
-        if ("1".equals(operation)) {
-            LocalDate date1 = LocalDate.now();
-            this.checkInDate=date1;
-            System.out.println("ClockIn" + ":" + date1);
-        } else {
-            System.out.println("Mismatch!!check your number");
-            System.exit(2);
-        }
-        return null;
-    }
+
 }
